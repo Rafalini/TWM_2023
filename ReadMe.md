@@ -2,19 +2,21 @@
 
 ## Tracking:
 
-https://github.com/abewley/sort
+* [SORT architecture for tracking](https://arxiv.org/pdf/1602.00763.pdf)
 
-https://github.com/nwojke/deep_sort
+    * SORT repo:  https://github.com/abewley/sort
+
+    * Deep SORT repo: https://github.com/nwojke/deep_sort
 
 ### OpenCV tracking:
 
-https://pysource.com/2021/01/28/object-tracking-with-opencv-and-python/
+* https://pysource.com/2021/01/28/object-tracking-with-opencv-and-python/
 
 ## Counting:
 
-https://github.com/BakingBrains/People_counting_basic
+* https://github.com/BakingBrains/People_counting_basic
 
 
 ## DataSets:
 
-https://cocodataset.org/#download
+* https://cocodataset.org/#download
