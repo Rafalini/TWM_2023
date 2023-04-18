@@ -20,3 +20,8 @@
 ## DataSets:
 
 * https://cocodataset.org/#download
+* https://detrac-db.rit.albany.edu/
+
+## Other:
+
+* https://www.aicitychallenge.org/
