@@ -22,6 +22,10 @@
 * https://cocodataset.org/#download
 * https://detrac-db.rit.albany.edu/
 
+## UA-DETRAC datasets and annotations on Google Drive:
+
+* https://drive.google.com/drive/folders/1FsKN1mzJe3RKrgKS8E1nCbMmlMf0ouMH?usp=share_link
+
 ## Other:
 
 * https://www.aicitychallenge.org/
