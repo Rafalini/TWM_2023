@@ -1,3 +1,8 @@
+# Before you start:
+Download data from the following folder:
+https://drive.google.com/drive/folders/1FsKN1mzJe3RKrgKS8E1nCbMmlMf0ouMH?usp=share_link
+
+
 # Links:
 
 ## Tracking:
