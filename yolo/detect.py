@@ -28,16 +28,7 @@ def arg_parse():
     parser.add_argument("--det", dest = 'det', help = 
                         "Image / Directory to store detections to",
                         default = "det", type = str)
-    parser.add_argument("--bs", dest = "bs", help = "Batch size", default = 1)
-    parser.add_argument("--confidence", dest = "confidence", help = "Object Confidence to filter predictions", default = 0.5)
-    parser.add_argument("--nms_thresh", dest = "nms_thresh", help = "NMS Threshhold", default = 0.4)
-    parser.add_argument("--cfg", dest = 'cfgfile', help = 
-                        "Config file",
-                        default = "cfg/yolov3.cfg", type = str)
-    parser.add_argument("--weights", dest = 'weightsfile', help = 
-                        "weightsfile",
-                        default = "cfg/yolov3.weights", type = str)
-    parser.add_argument("--reso", dest = 'reso', help = 
+    parser.add_argument("--reso", dest = 'reso', help =
                         "Input resolution of the network. Increase to increase accuracy. Decrease to increase speed",
                         default = "416", type = str)
     
@@ -45,23 +36,19 @@ def arg_parse():
     
 args = arg_parse()
 images = args.images
-batch_size = int(args.bs)
-confidence = float(args.confidence)
-nms_thesh = float(args.nms_thresh)
+batch_size = int(1)
+confidence = float(0.5)
+nms_thesh = float(0.4)
 start = 0
 CUDA = torch.cuda.is_available()
-
-
 
 num_classes = 80
 classes = load_classes("cfg/coco.names")
 
-
-
 #Set up the neural network
 print("Loading network.....")
-model = Darknet(args.cfgfile)
-model.load_weights(args.weightsfile)
+model = Darknet('cfg/yolov3.cfg')
+model.load_weights('cfg/yolov3.weights')
 print("Network successfully loaded")
 
 model.net_info["height"] = args.reso
@@ -72,7 +59,6 @@ assert inp_dim > 32
 #If there's a GPU availible, put the model on GPU
 if CUDA:
     model.cuda()
-
 
 #Set the model in evaluation mode
 model.eval()
@@ -113,8 +99,8 @@ write = 0
 
 if CUDA:
     im_dim_list = im_dim_list.cuda()
-    
 start_det_loop = time.time()
+
 for i, batch in enumerate(im_batches):
 #load the image 
     start = time.time()
