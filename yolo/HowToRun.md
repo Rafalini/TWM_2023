@@ -1,4 +1,5 @@
 # 1st step:
 ```$ python setup.py```
 # 2nd step:
-```$  python3 detect.py --images ./images --det ./images_out```
+set path to image:
+```input_img = cv2.imread('images/dog-cycle-car.png')```
