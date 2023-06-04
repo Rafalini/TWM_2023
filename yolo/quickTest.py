@@ -16,10 +16,16 @@ def get_test_input():
     img_ = Variable(img_)  # Convert to Variable
     return img_
 
+#model building
 blocks = parse_cfg("cfg/yolov3.cfg")
 print(create_modules(blocks))
-
+#random prediction
 model = Darknet("cfg/yolov3.cfg")
 inp = get_test_input()
+pred = model(inp, torch.cuda.is_available())
+print(pred)
+#weights read
+model = Darknet("cfg/yolov3.cfg")
+model.load_weights("yolov3.weights")
 pred = model(inp, torch.cuda.is_available())
 print(pred)
