@@ -6,11 +6,23 @@ import glob
 import os
 
 
+def check_lane_crossing(curr_point, prev_point, lines):
+    for line in lines:
+        prev_pos = (line[2] - line[0]) * (prev_point[1] - line[1]) - (line[3] - line[1]) * (prev_point[0] - line[0])
+        curr_pos = (line[2] - line[0]) * (curr_point[1] - line[1]) - (line[3] - line[1]) * (curr_point[0] - line[0])
+
+        if prev_pos <= 0 and curr_pos > 0:
+            return True
+        elif prev_pos >= 0 and curr_pos < 0:
+            return True
+    return False
+
+
 # Initialize Object Detection
 od = ObjectDetection()
 
 
-path = glob.glob(os.path.join("../dane/Insight-MVT_Annotation_Train",'MVI_40191','*.jpg'))
+path = glob.glob(os.path.join("../dane/Insight-MVT_Annotation_Train",'MVI_20034','*.jpg'))
 
 # Initialize count
 count = 0
@@ -19,10 +31,16 @@ center_points_prev_frame = []
 tracking_objects = {}
 track_id = 0
 
-limitsL = [0, 210, 470, 210]
-limitsR = [550, 210, 1000, 210]
+#limitsL = [0, 210, 470, 210] #MVI_40191
+#limitsR = [550, 210, 1000, 210] #MVI_40191
+limitsL = [0, 370, 530, 370] #MVI_20034
+limitsR = [560, 370, 1000, 370] #MVI_20034
 totalCountL = []
 totalCountR = []
+
+#lanes
+lanes = [[85, 540, 440, 90], [318, 540, 485, 90], [865, 540, 590, 90], [960, 390, 640, 90]]
+crossLaneCount = []
 
 for file in path:
     frame = cv2.imread(file)
@@ -66,6 +84,11 @@ for file in path:
                 if distance < 20:
                     tracking_objects[object_id] = pt
                     object_exists = True
+
+                    if check_lane_crossing(pt, pt2, lanes):
+                        crossLaneCount.append(object_id)
+                        cv2.circle(frame, pt, 5, (0, 0, 255), -1)
+
                     if pt in center_points_cur_frame:
                         center_points_cur_frame.remove(pt)
                     continue
@@ -84,9 +107,16 @@ for file in path:
     # right side of the road
     cv2.line(frame, (limitsR[0], limitsR[1]), (limitsR[2], limitsR[3]), (0, 255, 0), 5)
 
+    #lanes
+    for lane in lanes:
+        cv2.line(frame, (lane[0], lane[1]), (lane[2], lane[3]), (255, 0, 0), 2)
+        cv2.line(frame, (lane[0], lane[1]), (lane[2], lane[3]), (255, 0, 0), 2)
+        cv2.line(frame, (lane[0], lane[1]), (lane[2], lane[3]), (255, 0, 0), 2)
+        cv2.line(frame, (lane[0], lane[1]), (lane[2], lane[3]), (255, 0, 0), 2)
+
     for object_id, pt in tracking_objects.items():
-        cv2.circle(frame, pt, 5, (0, 0, 255), -1)
-        cv2.putText(frame, str(object_id), (pt[0], pt[1] - 7), 0, 1, (0, 0, 255), 2)
+        #cv2.circle(frame, pt, 5, (0, 0, 255), -1)
+        #cv2.putText(frame, str(object_id), (pt[0], pt[1] - 7), 0, 1, (0, 0, 255), 2)
 
         if limitsL[0] < pt[0] < limitsL[2] and limitsL[1] - 30 < pt[1] < limitsL[1] + 30:
             if totalCountL.count(object_id) == 0:
@@ -102,9 +132,13 @@ for file in path:
     print("CUR FRAME NEW PTS")
     print(center_points_cur_frame)
 
+    print("CROSS LANE ")
+    print(crossLaneCount)
+
     # print Count information on the frame
     cv2.putText(frame, str(f'Count right: {len(totalCountR)}'), (700, 50), 3, 1, (255, 255, 255), 1)
     cv2.putText(frame, str(f'Count left: {len(totalCountL)}'), (30, 50), 3, 1, (255, 255, 255), 1)
+    cv2.putText(frame, str(f'Lanes crossed: {len(crossLaneCount)}'), (400, 500), 3, 1, (255, 255, 255), 1)
     cv2.imshow("Frame", frame)
 
     # Make a copy of the points
