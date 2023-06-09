@@ -1,5 +1,6 @@
 import torch.nn as nn
-from darknet import DetectionLayer, EmptyLayer, Darknet
+from vechicle_tracking.yolo.models.darknet import DetectionLayer, EmptyLayer
+
 
 def parse_cfg(cfgfile):
     """

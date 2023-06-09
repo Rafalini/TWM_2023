@@ -1,11 +1,6 @@
 from __future__ import division
-import time
-import cv2
-from util import *
-import argparse
-import os 
-import os.path as osp
-from darknet import Darknet
+from utils.reshapeOutput import *
+from models.darknet import Darknet
 
 batch_size = int(1)
 confidence = float(0.5)
@@ -18,8 +13,8 @@ classes = load_classes("cfg/coco.names")
 
 #Set up the neural network
 print("Loading network.....")
-model = Darknet('cfg/yolov3.cfg')
-model.load_weights('cfg/yolov3.weights')
+model = Darknet('cfg/yolov4.cfg')
+model.load_weights('cfg/yolov4.weights')
 print("Network successfully loaded")
 
 model.net_info["height"] = 832
@@ -33,7 +28,7 @@ if CUDA:
 #Set the model in evaluation mode
 model.eval()
 
-input_img = cv2.imread('images/dog-cycle-car.png')
+input_img = cv2.imread('data/dog-cycle-car.png')
 input_tensor = prep_image(input_img, inp_dim)
 
 if CUDA:

@@ -22,7 +22,8 @@ def check_lane_crossing(curr_point, prev_point, lines):
 od = ObjectDetection()
 
 
-path = glob.glob(os.path.join("../dane/Insight-MVT_Annotation_Train",'MVI_20034','*.jpg'))
+path = glob.glob(os.path.join("./Insight-MVT_Annotation_Train",'MVI_20034','*.jpg'))
+path.sort()
 
 # Initialize count
 count = 0
