@@ -6,7 +6,6 @@ import glob
 import os
 
 
-
 # Initialize Object Detection
 od = ObjectDetection()
 
@@ -19,6 +18,11 @@ center_points_prev_frame = []
 
 tracking_objects = {}
 track_id = 0
+
+limitsL = [0, 210, 470, 210]
+limitsR = [550, 210, 1000, 210]
+totalCountL = []
+totalCountR = []
 
 for file in path:
     frame = cv2.imread(file)
@@ -75,18 +79,32 @@ for file in path:
             tracking_objects[track_id] = pt
             track_id += 1
 
+    # left side of the road
+    cv2.line(frame, (limitsL[0], limitsL[1]),(limitsL[2], limitsL[3]), (0,0,255), 5)
+    # right side of the road
+    cv2.line(frame, (limitsR[0], limitsR[1]), (limitsR[2], limitsR[3]), (0, 255, 0), 5)
+
     for object_id, pt in tracking_objects.items():
         cv2.circle(frame, pt, 5, (0, 0, 255), -1)
         cv2.putText(frame, str(object_id), (pt[0], pt[1] - 7), 0, 1, (0, 0, 255), 2)
 
+        if limitsL[0] < pt[0] < limitsL[2] and limitsL[1] - 30 < pt[1] < limitsL[1] + 30:
+            if totalCountL.count(object_id) == 0:
+                totalCountL.append(object_id)
+
+        if limitsR[0] < pt[0] < limitsR[2] and limitsR[1] - 30 < pt[1] < limitsR[1] + 30:
+            if totalCountR.count(object_id) == 0:
+                totalCountR.append(object_id)
+
     print("Tracking objects")
     print(tracking_objects)
-
 
     print("CUR FRAME NEW PTS")
     print(center_points_cur_frame)
 
-
+    # print Count information on the frame
+    cv2.putText(frame, str(f'Count right: {len(totalCountR)}'), (700, 50), 3, 1, (255, 255, 255), 1)
+    cv2.putText(frame, str(f'Count left: {len(totalCountL)}'), (30, 50), 3, 1, (255, 255, 255), 1)
     cv2.imshow("Frame", frame)
 
     # Make a copy of the points
