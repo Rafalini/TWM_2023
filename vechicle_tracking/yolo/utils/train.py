@@ -6,6 +6,7 @@ from __future__ import division
 from __future__ import absolute_import
 
 import shutil
+import time
 from collections import OrderedDict
 
 import torch
@@ -56,6 +57,7 @@ def train_epoch(epoch, model, optimizer, args):
         optimizer.step()
         losses += l.item()
     print("Epoch: {}, Ave loss: {}".format(epoch, losses / i))
+    time.sleep(20)
     return losses / i
 
 def test_epoch(model, use_cuda=False, jpg=None):

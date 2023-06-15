@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-
+root = 'testData'
 def create_label(chunk):
     '''
     input: chunk
@@ -139,9 +139,9 @@ def create_label(chunk):
 
 
 def load_data(i):
-    img = './data/{}.jpg'.format(i)
+    img = './'+root+'/{}.jpg'.format(i)
 
-    with open('./data/annotations/{}.json'.format(i)) as f:
+    with open('./'+root+'/annotations/{}.json'.format(i)) as f:
         json_dict = json.load(f)
 
     wh = json_dict['image_w_h']
@@ -185,7 +185,7 @@ def get_datas(idx, use_cuda=False):
 
 
 def train_batches(batch_size=1, use_cuda=False):
-    train_size = len(os.listdir('./data/annotations'))
+    train_size = len(os.listdir('./'+root+'/annotations'))
     shuffle_idx = np.random.permutation(list(range(1, train_size + 1)))
     for i in range(train_size // batch_size):
         yield get_datas(shuffle_idx[i*batch_size: (i+1)*batch_size], use_cuda)

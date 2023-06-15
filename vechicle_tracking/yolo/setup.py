@@ -15,4 +15,4 @@ def download_if_not_exists(filename, url):
     if not os.path.exists(filename):
         download_file(filename, url)
 
-download_if_not_exists('cfg/yolov3.weights', 'https://pjreddie.com/media/files/yolov3.weights')
+download_if_not_exists('cfg/yolov4.weights', 'https://pjreddie.com/media/files/yolov4.weights')

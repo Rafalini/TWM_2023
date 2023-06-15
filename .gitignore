@@ -1,4 +1,6 @@
-annotations/DETRAC-Test-Annotations-MAT/
-annotations/DETRAC-Train-Annotations-MAT/
-annotations/DETRAC-Test-Annotations-XML/
-annotations/DETRAC-Train-Annotations-XML/
+vechicle_tracking/annotations/DETRAC-Test-Annotations-MAT/
+vechicle_tracking/annotations/DETRAC-Train-Annotations-MAT/
+vechicle_tracking/annotations/DETRAC-Test-Annotations-XML/
+vechicle_tracking/annotations/DETRAC-Train-Annotations-XML/
+vechicle_tracking/Insight-MVT_Annotation_Test
+vechicle_tracking/Insight-MVT_Annotation_Train
