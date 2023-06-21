@@ -41,8 +41,8 @@ def draw_limits(limitsL1, limitsL2, limitsR1, limitsR2):
 
 # Initialize Object Detection
 od = ObjectDetection()
-#path = glob.glob(os.path.join("../data/Insight-MVT_Annotation_Train",'MVI_40191','*.jpg'))
-path = glob.glob(os.path.join("../data/Insight-MVT_Annotation_Train",'MVI_20034','*.jpg'))
+#path = glob.glob(os.path.join("./data/examples",'MVI_40191','*.jpg'))
+path = glob.glob(os.path.join("./data/examples",'MVI_20034','*.jpg'))
 path.sort()
 
 # Initialize frame count
@@ -138,8 +138,8 @@ for file in path:
     draw_lanes(lanes)
 
     for object_id, pt in tracking_objects.items():
-        cv2.circle(frame, pt, 5, (0, 0, 255), -1)
-        cv2.putText(frame, str(object_id), (pt[0], pt[1] - 7), 0, 1, (0, 0, 255), 2)
+        #cv2.circle(frame, pt, 5, (0, 0, 255), -1)
+        #cv2.putText(frame, str(object_id), (pt[0], pt[1] - 7), 0, 1, (0, 0, 255), 2)
 
         if limitsL1[0] < pt[0] < limitsL1[2] and limitsL1[1] - 10 < pt[1] < limitsL1[1] + 10:
             if object_id not in enter_times:
