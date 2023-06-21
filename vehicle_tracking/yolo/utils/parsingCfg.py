@@ -1,5 +1,5 @@
 import torch.nn as nn
-from vechicle_tracking.yolo.models.darknet import DetectionLayer, EmptyLayer
+from vehicle_tracking.yolo.models.darknet import DetectionLayer, EmptyLayer
 
 
 def parse_cfg(cfgfile):
